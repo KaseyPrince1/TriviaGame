@@ -1,3 +1,11 @@
+//I want to give the player 90 seconds to answer the questions using a timer
+setTimeout(timeIsUp, 1000 * 90);
+
+function timeIsUp() {
+    
+  alert("Whoops, you are out of time!");
+};
+
 let correct = 0;
 let possible = 0;
 //objects to create a question with options and answers creating an array of objects 
@@ -53,11 +61,6 @@ function displayQuestions(){
           //  )
        // }
     }
-//}
+};
 displayQuestions();
 
-setTimeout(timeIsUp, 1000 * 90);
-
-function timeIsUp() {
-  alert("Whoops, you are out of time!");
-}
