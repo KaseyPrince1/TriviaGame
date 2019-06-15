@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--k i will use the simple timer activity to get a base structure of my triviagame-->
+<html lang="en-us">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <title>Trivia Game</title>
+    <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  </head>
+
+  <body>
+<!--start by creating a layout of the context-->
+    <h1>Trivia Game!</h1>
+    <!--think about adding a start button-->
+    <div>You have 90 seconds to complete the quiz below</div>
+    <!--should I use form? it could be cute-->
+    <div id='container'>
+        <div id='question'></div>
+        <div id='options'>
+                <div class='option' id='a' onclick="check('a')"></div>
+                <div class='option' id='b' onclick="check('b')"></div>
+                <div class='option' id='c' onclick="check('c')"></div>
+        </div>
+
+    <div id="time-left"></div>
+        <div id='counter'></div>
+        <div id='timesUp'></div>
+    <div id='score'style='display: none'></div>
+
+</div> 
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Script -->
+    <script src="assets/javascript/app.js"></script>
+
+  </body>
+
+</html>
