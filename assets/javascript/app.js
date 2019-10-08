@@ -1,66 +1,110 @@
-//I want to give the player 90 seconds to answer the questions using a timer
-setTimeout(timeIsUp, 1000 * 90);
 
-function timeIsUp() {
-    
-  alert("Whoops, you are out of time!");
-};
+let card = $("#quiz"); 
 
-let correct = 0;
-let possible = 0;
-//objects to create a question with options and answers creating an array of objects 
-let questions = [
-{
-    question : "In what year did American women win the right to vote?",
-    options:{
-        a       : "1897",
-        b       : "1920",
-        c       : "1932",
-        },
-    Answer  : "b",
-}
-,
-{
-    question : "In 1932, Amelia Earhart was the first woman to:",
-    options:{
-        a       : "Fly a plane",
-        b       : "Fly solo across the Atlantic",
-        c       : "Join the AirForce",
-        },
-    Answer  : "b",
-}
-,
-{
-    question : "Who was the first American woman to win the Nobel Peace Prize?",
-    options:{
-    a       : "Jane Addams",
-    b       : "Jody Williams",
-    c       : "Oprah Winfrey",
+
+let questions = [{
+    question: "In what year did American women win the right to vote?",
+    answers: [
+        "1897",
+        "1920",
+        "1932",
+        ],
+    correctAnswer: "1920"
+  },
+    {
+    question: "In 1932, Amelia Earhart was the first woman to:",
+    answers: [
+        "Fly a plane",
+        "Fly solo across the Atlantic",
+        "Join the AirForce"
+        ],
+    correctAnswer:"Fly solo across the Atlantic"
     },
-    Answer  : "a",
-}
-,
-{
-    question : "What was the first state to allow women to vote?",
-    options:{
-        a       : "Wyoming",
-        b       : "Utah",
-        c       : "Washington",
-        },
-    Answer  : "a",
-}];
-
-//As one of the first leaders for women's rights, who was the first woman pictured on a US coin in circulation? Susan B. Anthony;
-function displayQuestions(){
-    let output=[];
-    let options;
-   for(let i=0; i<questions.length; i++){
-        $("#container").append("<div>" + questions.length + "<div>");
-        //for(let i=0; i<options.length; i++){
-         //   answers.push(
-          //  )
-       // }
+  {
+    question: "Who was the first American woman to win the Nobel Peace Prize?",
+    answers: [
+        "Jane Addams",
+        "Jody Williams",
+        "Oprah Winfrey"
+        ],
+    correctAnswer: "Jane Addams"
+  },
+    {
+    question: "What was the first state to allow women to vote?",
+    answers: [
+        "Wyoming",
+        "Utah",
+        "Washington"
+        ],
+    correctAnswer: "Wyoming",
     }
-};
-displayQuestions();
+];
 
+let timer;
+
+let game = {
+    correct: 0,
+    incorrect: 0,
+    counter: 120,
+
+    countdown: function(){
+        game.counter--;
+        $('#counter-number').html(game.counter);
+        if (game.counter===0){
+            alert("Whoops, you are out of time");
+            game.end();
+        }
+    },
+
+    start: function(){
+        timer = setInterval(game.countdown, 1000);
+
+        $('#sub-wrapper').prepend(
+            '<h2>Time Remaining: <span id="counter-number"></span> Seconds</h2>'
+        );
+
+        $('#start').remove();
+
+          for(let i = 0; i < questions.length; i++) {
+            card.append('<h2>' + questions[i].question + '</h2>');
+
+            for(let j = 0; j < questions[i].answers.length; j++) {
+
+              card.append(
+                  "  <input type='radio' name=' question-" + ' ' + i + 
+              "' value=' " +questions[i].answers[j]+"' > " +questions[i].answers[j])
+            }
+          }
+      
+          card.append('<button id="end">Submit</button>')
+    },
+
+        end: function() {
+            let inputs = card.children("input:checked");
+            for (var i = 0; i < inputs.length; i++) {
+              if ($(inputs[i]).val() === questions[i].correctAnswer) {
+                game.correct++;
+              } else {
+                game.incorrect++;
+              }
+            }
+            this.result();
+          },
+        
+          result: function() {
+            clearInterval(timer);
+        
+            $("#quiz h2").remove();
+        
+            card.html("<h2>All Done!</h2>");
+            card.append("<h3>Correct Answers: " + this.correct + "</h3>");
+            card.append("<h3>Incorrect Answers: " + this.incorrect + "</h3>");
+          }
+        };
+    $(document).on("click", "#start", function() {
+        game.start();
+      });
+      
+      $(document).on("click", "#end", function() {
+        game.end();
+      });
